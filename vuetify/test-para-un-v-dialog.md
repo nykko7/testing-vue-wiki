@@ -1,12 +1,14 @@
+# Test-para-un-v-dialog
+
 Al hacer nuestro `wrapper`, este no podrá encontrar los elementos dentro de un `v-dialog` a menos que se active. Es decir, para nosotros poder testear funcionalidades dentro de estos componentes es necesario activar este componente.
 
-> UPDATE (04/06/21): Después de más investigación, se encontró una propiedad para `<v-dialog>` que permite que este este renderizado en el DOM desde que se monta el componente. Para ver esto, revisa el apéndice.  
+> UPDATE (04/06/21): Después de más investigación, se encontró una propiedad para `<v-dialog>` que permite que este este renderizado en el DOM desde que se monta el componente. Para ver esto, revisa el apéndice.
 
-<h3> Como abrir un v-alert </h3>
+#### Como abrir un v-alert
 
-En el caso de este proyecto, para abrir esta alerta, se necesita presionar el botón de `"Nuevo Grupo"`, en donde se abre una nueva ventana para poder crear el nuevo grupo: 
+En el caso de este proyecto, para abrir esta alerta, se necesita presionar el botón de `"Nuevo Grupo"`, en donde se abre una nueva ventana para poder crear el nuevo grupo:
 
-![image](uploads/d6d2c83161a9a9dffc89bf5fe7fe1d77/image.png)
+![image](../Vuetify/uploads/d6d2c83161a9a9dffc89bf5fe7fe1d77/image.png)
 
 Su código siendo:
 
@@ -14,7 +16,6 @@ Su código siendo:
        <v-btn class="addGroup" color="primary" @click="dialogAddGroup = true">
          Agregar
       </v-btn>
-
 ```
 
 Entonces, lo primero que tenemos que hacer es buscar en nuestro `wrapper `el botón de `"Nuevo Grupo"`. Esto lo hacemos mediante el método `find()` y buscando el nombre de la clase del botón:
@@ -44,17 +45,17 @@ Con esto ya sabemos que si nos encontramos dentro del componente a probar y pode
 
 Una cosa que es importante notar, es que al correr los tests aparece el siguiente warning:
 
-![image](uploads/5fa1c54a5e6e722b4cfd0c8b2d7665a1/image.png)
+![image](../Vuetify/uploads/5fa1c54a5e6e722b4cfd0c8b2d7665a1/image.png)
 
-Esto se debe a que todos los elementos de Vuetify deben estar dentro de las etiquetas <v-app>. Para simular esto en nuestro test y que el `<v-dialog>` se renderice correctamente, colocamos la siguiente linea al inicio de nuestro archivo donde tenemos nuestros tests:
+Esto se debe a que todos los elementos de Vuetify deben estar dentro de las etiquetas . Para simular esto en nuestro test y que el `<v-dialog>` se renderice correctamente, colocamos la siguiente linea al inicio de nuestro archivo donde tenemos nuestros tests:
 
 ```javascript
 document.body.setAttribute('data-app', true)
 ```
 
-Con esto el warning desaparece. 
+Con esto el warning desaparece.
 
-<h3> Apéndice </h3>
+#### Apéndice
 
 Otra forma de poder utilizar y encontrar los elementos dentro de un `<v-dialog>` es mediante la propiedad `eager`. Esta propiedad lo que hace es renderizar el componente en el DOM cuando se monte, sin la necesidad de interactuar con el para que aparezca (como se hacia anteriormente). En nuestro componente, esto se ve de la siguiente forma:
 
@@ -66,14 +67,11 @@ Otra forma de poder utilizar y encontrar los elementos dentro de un `<v-dialog>`
 
 Asi en nuestro test podemos pasar a buscar directamente lo que queremos testear dentro de nuestro componente.
 
-> NOTA: A pesar de que este método es distinto al anterior, la linea `document.body.setAttribute('data-app', true)` aun es necesaria para que no aparezca el warning señalado mas arriba. 
+> NOTA: A pesar de que este método es distinto al anterior, la linea `document.body.setAttribute('data-app', true)` aun es necesaria para que no aparezca el warning señalado mas arriba.
 
-<h3> Referencias </h3>
+#### Referencias
 
-- [How to test UX of v-dialog (Vuetify) components which is not appears in wrapper?](https://forum.vuejs.org/t/how-to-test-ux-of-v-dialog-vuetify-components-which-is-not-appears-in-wrapper/78114)
-
-- [trigger](https://vue-test-utils.vuejs.org/api/wrapper/trigger.html)
-
-- [v-dialog API](https://vuetifyjs.com/en/api/v-dialog/#props)
-
-- [Vuetify, data-app=“true” and problems rendering <v-dialog> in unit tests](https://forum.vuejs.org/t/vuetify-data-app-true-and-problems-rendering-v-dialog-in-unit-tests/27495)
+* [How to test UX of v-dialog (Vuetify) components which is not appears in wrapper?](https://forum.vuejs.org/t/how-to-test-ux-of-v-dialog-vuetify-components-which-is-not-appears-in-wrapper/78114)
+* [trigger](https://vue-test-utils.vuejs.org/api/wrapper/trigger.html)
+* [v-dialog API](https://vuetifyjs.com/en/api/v-dialog/#props)
+* [Vuetify, data-app=“true” and problems rendering in unit tests](https://forum.vuejs.org/t/vuetify-data-app-true-and-problems-rendering-v-dialog-in-unit-tests/27495)
